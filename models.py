@@ -8,8 +8,8 @@ def FeatureExtract(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 
   inputs = tf.keras.Input(type_spec = graph_tensor_spec())
   results = inputs.merge_batch_to_components() # merge graphs of a batch to one graph as different components
   results = tfgnn.keras.layers.MapFeatures(
-    node_sets_fn = lambda node_set, *, node_set_name: tf.keras.layers.Embedding(node_types, channels)(node_set[tfgnn.HIDDEN_STATE]),
-    edge_sets_fn = lambda edge_set, *, edge_set_name: tf.keras.layers.Embedding(edge_types, channels)(edge_set[tfgnn.HIDDEN_STATE]))(results)
+    node_sets_fn = lambda node_set, *, node_set_name: tf.keras.layers.Dense(channels)(node_set[tfgnn.HIDDEN_STATE]),
+    edge_sets_fn = lambda edge_set, *, edge_set_name: tf.keras.layers.Dense(channels)(edge_set[tfgnn.HIDDEN_STATE]))(results)
   # only update node vectors
   for i in range(layer_num):
     results = tfgnn.keras.layers.GraphUpdate(
