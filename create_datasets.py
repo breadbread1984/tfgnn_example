@@ -109,7 +109,7 @@ def main(unused_argv):
     for line, row in enumerate(f.readlines()):
       if line == 0: continue
       smiles, label = row.split(',')
-      samples.append((smiles, int(label))
+      samples.append((smiles, int(label)))
   generate_dataset(samples, FLAGS.output_tfrecord)
 
 if __name__ == "__main__":
