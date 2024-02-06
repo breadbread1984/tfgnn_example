@@ -23,7 +23,7 @@ def main(unused_argv):
   valset = tf.data.TFRecordDataset(join(FLAGS.dataset, 'testset.tfrecord')).map(parse_function).prefetch(FLAGS.batch).shuffle(FLAGS.batch).batch(FLAGS.batch)
   model = Predictor()
   loss = [tf.keras.losses.SparseCategoricalCrossentropy()]
-  metrics = [tf.keras.metrics.BinaryAccuracy()]
+  metrics = [tf.keras.metrics.SparseCategoricalAccuracy()]
   optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.CosineDecayRestarts(FLAGS.lr, first_decay_steps = FLAGS.decay_steps))
   model.compile(optimizer = optimizer, loss = loss, metrics = metrics)
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
