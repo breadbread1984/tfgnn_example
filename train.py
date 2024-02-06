@@ -24,7 +24,7 @@ def main(unused_argv):
   model = Predictor()
   loss = [tf.keras.losses.MeanAbsoluteError()]
   metrics = [tf.keras.metrics.MeanAbsoluteError()]
-  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ConsineDecayRestarts(FLAGS.lr, first_decay_steps = FLAGS.decay_steps))
+  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.CosineDecayRestarts(FLAGS.lr, first_decay_steps = FLAGS.decay_steps))
   model.compile(optimizer = optimizer, loss = loss, metrics = metrics)
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
   callbacks = [
