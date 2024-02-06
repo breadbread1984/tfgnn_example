@@ -34,7 +34,7 @@ def FeatureExtract(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 
     }
   )(results)
   # graph pooling
-  results = tfgnn.keras.layers.Pool(tag = tfgnn.CONTEXT, reduce_type = "mean", node_set_name = "atom")(graph)
+  results = tfgnn.keras.layers.Pool(tag = tfgnn.CONTEXT, reduce_type = "mean", node_set_name = "atom")(results)
   return tf.keras.Model(inputs = inputs, outputs = results)
 
 def Predictor(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 118, edge_types = 22):
