@@ -26,7 +26,7 @@ def FeatureExtract(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 
         },
         next_state = tfgnn.keras.layers.NextStateFromConcat(
           transformation = tf.keras.Sequential([
-            tf.keras.layers.Dense(channels, activations = tf.keras.activations.gelu, kernel_regularizer = tf.keras.regularizers.l2(5e-4), bias_regularizer = tf.keras.regularizers.l2(5e-4))
+            tf.keras.layers.Dense(channels, activations = tf.keras.activations.gelu, kernel_regularizer = tf.keras.regularizers.l2(5e-4), bias_regularizer = tf.keras.regularizers.l2(5e-4)),
             tf.keras.layers.Dropout(drop_rate)
           ])
         )
