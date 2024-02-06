@@ -1,0 +1,4 @@
+tensorflow
+tensorflow_gnn
+absl-py
+rdkit
