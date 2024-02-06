@@ -13,7 +13,8 @@ python3 -m pip install -r requirements.txt
 ## create dataset
 
 ```shell
-python3 create_dataset.py --input_csv <path/to/csv> --output_dir dataset
+python3 create_dataset.py --input_csv <path/to/train/csv> --output_tfrecord trainset.tfrecord
+python3 create_dataset.py --input_csv <path/to/test/csv> --output_tfrecord testset.tfrecord
 ```
 
 ## train

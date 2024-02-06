@@ -40,5 +40,5 @@ def FeatureExtract(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 
 def Predictor(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 118, edge_types = 22):
   inputs = tf.keras.Input(type_spec = graph_tensor_spec())
   results = FeatureExtract(channels, layer_num, drop_rate, node_types, edge_types)(inputs)
-  results = tf.keras.layers.Dense(1)(results)
+  results = tf.keras.layers.Dense(1, activation = tf.keras.activations.sigmoid)(results)
   return tf.keras.Model(inputs = inputs, outputs = results)
