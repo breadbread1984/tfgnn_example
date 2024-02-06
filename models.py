@@ -32,7 +32,7 @@ def FeatureExtract(channels = 256, layer_num = 4, drop_rate = 0.5, node_types = 
         )
       )
     }
-)(results)
+  )(results)
   # graph pooling
   results = tfgnn.keras.layers.Pool(tag = tfgnn.CONTEXT, reduce_type = "mean", node_set_name = "atom")(graph)
   return tf.keras.Model(inputs = inputs, outputs = results)
