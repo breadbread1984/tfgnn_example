@@ -29,7 +29,7 @@ def main(unused_argv):
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
   callbacks = [
     tf.keras.callbacks.TensorBoard(log_dir = FLAGS.ckpt),
-    tf.keras.callbacks.ModelCheckpoint(filepath = join(FLAGS.ckpt, 'ckpt'), save_freq = FLAGS.save_freq)]
+    tf.keras.callbacks.ModelCheckpoint(filepath = join(FLAGS.ckpt, 'ckpt'), save_freq = FLAGS.save_freq, save_best_only = True, mode = "auto")]
   model.fit(trainset, epochs = FLAGS.epochs, validation_data = valset, callbacks = callbacks)
 
 if __name__ == "__main__":
