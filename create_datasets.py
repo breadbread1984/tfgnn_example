@@ -12,8 +12,8 @@ import tensorflow_gnn as tfgnn
 FLAGS = flags.FLAGS
 
 def add_options():
-  flags.DEFINE_string('input_csv', default = None, help = 'path to polymer dataset csv')
-  flags.DEFINE_string('output_tfrecord', default = 'dataset', help = 'path to output tfrecord')
+  flags.DEFINE_string('input_dir', default = None, help = 'path to polymer dataset csv')
+  flags.DEFINE_string('output_dir', default = 'dataset', help = 'path to output tfrecord')
 
 def smiles_to_sample(smiles, label):
   molecule = Chem.MolFromSmiles(smiles)
@@ -107,14 +107,22 @@ def generate_dataset(samples, tfrecord_file):
   writer.close()
 
 def main(unused_argv):
-  if exists(FLAGS.output_tfrecord): remove(FLAGS.output_tfrecord)
+  if exists(FLAGS.output_dir): rmtree(FLAGS.output_dir)
+  mkdir(FLAGS.output_dir)
   samples = list()
-  with open(FLAGS.input_csv, 'r') as f:
+  with open(join(FLAGS.input_dir, 'mol_train.csv'), 'r') as f:
     for line, row in enumerate(f.readlines()):
       if line == 0: continue
       smiles, label = row.split(',')
       samples.append((smiles, int(label)))
-  generate_dataset(samples, FLAGS.output_tfrecord)
+  generate_dataset(samples, join(FLAGS.output_dir, 'trainset.tfrecord'))
+  samples = list()
+  with open(join(FLAGS.input_dir, 'mol_test.csv'), 'r') as f:
+    for line, row in enumerate(f.readlines()):
+      if line == 0: continue
+      smiles, label = row.split(',')
+      samples.append((smiles, int(label)))
+  generate_dataset(samples, join(FLAGS.output_dir, 'testset.tfrecord'))
 
 if __name__ == "__main__":
   add_options()
