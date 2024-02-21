@@ -24,7 +24,7 @@ def main(unused_argv):
   model = Predictor()
   loss = [tf.keras.losses.SparseCategoricalCrossentropy()]
   metrics = [tf.keras.metrics.SparseCategoricalAccuracy()]
-  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.CosineDecayRestarts(FLAGS.lr, first_decay_steps = FLAGS.decay_steps))
+  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponetialDecay(FLAGS.lr, decay_steps = FLAGS.epochs * 22))
   model.compile(optimizer = optimizer, loss = loss, metrics = metrics)
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
   callbacks = [
