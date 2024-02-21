@@ -16,7 +16,7 @@ def add_options():
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'checkpoint path')
   flags.DEFINE_integer('decay_steps', default = 10000, help = 'decay steps')
   flags.DEFINE_integer('save_freq', default = 1000, help = 'checkpoint save frequency')
-  flags.DEFINE_integer('epochs', default = 400, help = 'epochs to run')
+  flags.DEFINE_integer('epochs', default = 600, help = 'epochs to run')
 
 def main(unused_argv):
   trainset = tf.data.TFRecordDataset(join(FLAGS.dataset, 'trainset.tfrecord')).map(parse_function).prefetch(FLAGS.batch).shuffle(FLAGS.batch).batch(FLAGS.batch)
