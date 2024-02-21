@@ -16,7 +16,7 @@ def add_options():
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'checkpoint path')
   flags.DEFINE_integer('decay_steps', default = 10000, help = 'decay steps')
   flags.DEFINE_integer('save_freq', default = 1000, help = 'checkpoint save frequency')
-  flags.DEFINE_integer('epochs', default = 400, help = 'epochs to run')
+  flags.DEFINE_integer('epochs', default = 600, help = 'epochs to run')
 
 def main(unused_argv):
   trainset = tf.data.TFRecordDataset(join(FLAGS.dataset, 'trainset.tfrecord')).map(parse_function).prefetch(FLAGS.batch).shuffle(FLAGS.batch).batch(FLAGS.batch)
@@ -24,7 +24,7 @@ def main(unused_argv):
   model = Predictor()
   loss = [tf.keras.losses.SparseCategoricalCrossentropy()]
   metrics = [tf.keras.metrics.SparseCategoricalAccuracy()]
-  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.CosineDecayRestarts(FLAGS.lr, first_decay_steps = FLAGS.decay_steps))
+  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponentialDecay(FLAGS.lr, decay_steps = FLAGS.epochs * 22, decay_rate = 0.96))
   model.compile(optimizer = optimizer, loss = loss, metrics = metrics)
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
   callbacks = [
