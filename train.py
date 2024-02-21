@@ -15,7 +15,7 @@ def add_options():
   flags.DEFINE_float('lr', default = 1e-3, help = 'learning rate')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'checkpoint path')
   flags.DEFINE_integer('decay_steps', default = 10000, help = 'decay steps')
-  flags.DEFINE_integer('save_freq', default = 22, help = 'checkpoint save frequency')
+  flags.DEFINE_integer('save_freq', default = 1000, help = 'checkpoint save frequency')
   flags.DEFINE_integer('epochs', default = 400, help = 'epochs to run')
 
 def main(unused_argv):
@@ -29,7 +29,7 @@ def main(unused_argv):
   if exists(FLAGS.ckpt): model.load_weights(join(FLAGS.ckpt, 'ckpt', 'variables', 'variables'))
   callbacks = [
     tf.keras.callbacks.TensorBoard(log_dir = FLAGS.ckpt),
-    tf.keras.callbacks.ModelCheckpoint(filepath = join(FLAGS.ckpt, 'ckpt'), save_freq = FLAGS.save_freq, save_best_only = True, mode = "auto")]
+    tf.keras.callbacks.ModelCheckpoint(filepath = join(FLAGS.ckpt, 'ckpt'), save_freq = FLAGS.save_freq)]
   model.fit(trainset, epochs = FLAGS.epochs, validation_data = valset, callbacks = callbacks)
   model.save_weights('model_weights.h5')
 
