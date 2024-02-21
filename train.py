@@ -31,7 +31,6 @@ def main(unused_argv):
     tf.keras.callbacks.TensorBoard(log_dir = FLAGS.ckpt),
     tf.keras.callbacks.ModelCheckpoint(filepath = join(FLAGS.ckpt, 'ckpt'), save_freq = FLAGS.save_freq)]
   model.fit(trainset, epochs = FLAGS.epochs, validation_data = valset, callbacks = callbacks)
-  model.save_weights('model_weights.h5')
 
 if __name__ == "__main__":
   add_options()
