@@ -17,16 +17,20 @@ def add_options():
 
 def smiles_to_sample(smiles, label):
   molecule = Chem.MolFromSmiles(smiles)
+  indices = list()
   nodes = list()
   edges = list()
   for atom in molecule.GetAtoms():
     idx = atom.GetIdx()
     nodes.append(atom.GetAtomicNum())
+    indices.append(idx)
     for neighbor_atom in atom.GetNeighbors():
       neighbor_idx = neighbor_atom.GetIdx()
       bond = molecule.GetBondBetweenAtoms(idx, neighbor_idx)
       edges.append((idx, neighbor_idx, bond.GetBondType()))
+  sidx = tf.argsort(indices)
   nodes = tf.stack(nodes, axis = 0) # nodes.shape = (node_num,)
+  nodes = tf.gather(nodes, sidx)
   edges = tf.stack(edges, axis = 0) # edges.shape = (edge_num, 3)
   graph = tfgnn.GraphTensor.from_pieces(
     node_sets = {
