@@ -15,7 +15,7 @@ def add_options():
   flags.DEFINE_float('lr', default = 1e-3, help = 'learning rate')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'checkpoint path')
   flags.DEFINE_integer('decay_steps', default = 10000, help = 'decay steps')
-  flags.DEFINE_integer('save_freq', default = 1000, help = 'checkpoint save frequency')
+  flags.DEFINE_integer('save_freq', default = 22, help = 'checkpoint save frequency')
   flags.DEFINE_integer('epochs', default = 400, help = 'epochs to run')
 
 def main(unused_argv):
